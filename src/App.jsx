@@ -2,12 +2,68 @@ import React, { useEffect, useState } from 'react'
 import { Link, Route, Switch, useParams } from 'react-router-dom'
 import axios from 'axios'
 
-export function App() {
-  const [pet, setPet] = useState({})
+export function PetDetails() {
+  const [pets, setPets] = useState({})
 
   const [newPet, setNewPet] = useState('')
 
-  const [feeding, setFeeding] = useState({ id: undefined, text: '' })
+  // Get the list of pets
+  useEffect(async () => {
+    const resp = await axios.get(
+      `https://amandaf-tamagotchi.herokuapp.com/api/pets`
+    )
+    setPets(resp.data)
+  }, [])
+
+  async function handleCreatePetItem(event) {
+    event.preventDefault()
+    const response = await axios.post(
+      'https://amandaf-tamagotchi.herokuapp.com/api/pets',
+      {
+        name: newPet,
+      }
+    )
+    const refreshPetResponse = await axios.get(
+      'https://amandaf-tamagotchi.herokuapp.com/api/pets'
+    )
+    setPets(refreshPetResponse.data)
+    setPets('')
+  }
+
+  return (
+    <>
+      {Object.entries(pets).map(([petCode, petDetails]) => {
+        return (
+          <li key={petDetails.id}>
+            {' '}
+            {petDetails.name} Hunger:{petDetails.hungerLevel} Happiness:
+            {petDetails.happinessLevel}
+          </li>
+        )
+      })}
+      <form onSubmit={handleCreatePetItem}>
+        <input
+          type="text"
+          placeholder="What is your Pets Name?"
+          value={newPet}
+          onChange={function (event) {
+            setNewPet(event.target.value)
+          }}
+        />
+      </form>
+    </>
+  )
+}
+export function PetPage() {
+  const params = useParams()
+
+  console.log(params)
+
+  return <p>this would be pet {params.id}</p>
+}
+
+export function App() {
+  const [feeding, setFeeding] = useState({})
 
   const [playtime, setPlaytime] = useState({})
 
@@ -32,64 +88,22 @@ export function App() {
   //   )
   // })
 
-  // Get the list of pets
-  useEffect(async () => {
-    const resp = await axios.get(
-      `https://amandaf-tamagotchi.herokuapp.com/api/pets`
-    )
-    setPet(resp.data)
-  }, [])
-
-// Refresh List of Pets
-  const refreshTodoResponse = await axios.get('https://amandaf-tamagotchi.herokuapp.com/api/pets')setPet(refreshTodoResponse.data)
-
-  let petItems = Object.entries(pet).map(([petCode, petDetails]) => {
-    return (
-      <li key={petDetails.id}>
-        {' '}
-        {petDetails.name} Hunger:{petDetails.hungerLevel} Happiness:
-        {petDetails.happinessLevel}
-      </li>
-    )
-  })
-
-  async function handleCreatePetItem(event) {
-    event.preventDefault()
-    const response = await axios.post(
-      'https://amandaf-tamagotchi.herokuapp.com/api/pets',
-      {
-        name: newPet,
-      }
-    )
-    const refreshPetResponse = await axios.get('https://amandaf-tamagotchi.herokuapp.com/api/pets')
-    setPet(refreshPetResponse.data)
-    setPet('')
-  }
-
-
+  // Refresh List of Pets
 
   return (
     <>
       <header>
         <h1>Welcome to my SPA</h1>
-        <form onSubmit={handleCreatePetItem}>
-          <input
-            type="text"
-            placeholder="What is your Pets Name?"
-            value={newPet}
-            onChange={function (event) {
-              setNewPet(event.target.value)
-            }}
-          />
-        </form>
         <nav>
           <ul>
-            <li>{petItems}</li>
+            <li>
+              <PetDetails />
+            </li>
             <li>
               <Link to="/">Go Home</Link>
             </li>
             <li>
-              <Link to="/1">Page 1</Link>
+              <Link to="/pets/1">Page 1</Link>
             </li>
             <li>
               <Link to="/2">Page 2</Link>
@@ -101,7 +115,8 @@ export function App() {
         <Route exact path="/">
           Home
         </Route>
-        <Route exact path="/1">
+        <Route exact path="/pets/1">
+          <PetPage />
           Page 1
         </Route>
         <Route exact path="/2">
