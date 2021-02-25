@@ -60,7 +60,7 @@
   -- [pets, setPets]=useState({})
   -- [newPet,setNewPet]=useState({})
 
--- useEffect---> variableName= axious get 'Link to get the pets' set.Pet(variableName) \*Make sure to add an empty array
+-- useEffect---> variableName= axios get 'Link to get the pets' set.Pet(variableName) \*Make sure to add an empty array
 
 -- Create handler
 --- prevent default
@@ -75,4 +75,7 @@ name: newPet (new pet name goes here)
 --- Text, placeholder, value (should be newPet), onChange(should contain setNewPet)
 
 - PetPage
-  --
+  -- [pickedPet,setPickedPet]=useState({})
+
+-- const params=useParams
+-- useEffect -- useEffect---> variableName= axios get 'Link to get with id pets/${params.id}' set.Pet(variableName) \*Make sure to add an empty array

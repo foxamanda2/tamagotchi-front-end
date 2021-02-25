@@ -55,11 +55,27 @@ export function PetDetails() {
   )
 }
 export function PetPage() {
+  const [pickedPet, setPickedPet] = useState({})
+
   const params = useParams()
 
-  console.log(params)
+  useEffect(async () => {
+    const resp = await axios.get(
+      `https://amandaf-tamagotchi.herokuapp.com/api/pets/${params.id}`
+    )
+    setPickedPet(resp.data)
+  }, [])
 
-  return <p>this would be pet {params.id}</p>
+  return (
+    <>
+      <h1>
+        {pickedPet.name}: {pickedPet.happinessLevel}{' '}
+      </h1>
+      <button>Playtime</button>
+      <button>Feeding</button>
+      <button>Scolding</button>
+    </>
+  )
 }
 
 export function App() {
@@ -68,8 +84,6 @@ export function App() {
   const [playtime, setPlaytime] = useState({})
 
   const [scolding, setScolding] = useState({})
-
-  // const params = useParams()
 
   // useEffect(async () => {
   //   const resp = await axios.get(
@@ -103,7 +117,7 @@ export function App() {
               <Link to="/">Go Home</Link>
             </li>
             <li>
-              <Link to="/pets/1">Page 1</Link>
+              <Link to="/pets/id">Page 1</Link>
             </li>
             <li>
               <Link to="/2">Page 2</Link>
@@ -115,7 +129,7 @@ export function App() {
         <Route exact path="/">
           Home
         </Route>
-        <Route exact path="/pets/1">
+        <Route exact path="/pets/id">
           <PetPage />
           Page 1
         </Route>
