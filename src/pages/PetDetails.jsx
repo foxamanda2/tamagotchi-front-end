@@ -8,29 +8,27 @@ export function PetDetails() {
   const [newPet, setNewPet] = useState('')
 
   // Get the list of pets
-  useEffect(async () => {
+  async function loadAllPets() {
     const resp = await axios.get(
       `https://amandaf-tamagotchi.herokuapp.com/api/pets`
     )
     setPets(resp.data)
-  }, [])
+  }
 
+  // Loading all Pets
+  useEffect(loadAllPets, [])
+
+  // Create new Pets & Append
   async function handleCreatePetItem(event) {
     event.preventDefault()
-
-    const response = await axios.post(
+    const resp = await axios.post(
       'https://amandaf-tamagotchi.herokuapp.com/api/pets',
       {
         name: newPet,
       }
     )
-
-    // This is not refreshing response
-    const refreshPetResponse = await axios.get(
-      'https://amandaf-tamagotchi.herokuapp.com/api/pets'
-    )
-    setPets(refreshPetResponse.data)
-    setPets('')
+    loadAllPets()
+    setNewPet('')
   }
 
   return (
@@ -40,9 +38,9 @@ export function PetDetails() {
           return (
             <li key={petDetails.id}>
               {' '}
-              {petDetails.name} Hunger:{petDetails.hungerLevel} Happiness:
+              {petDetails.name}- Hunger:{petDetails.hungerLevel} Happiness:
               {petDetails.happinessLevel}
-              <Link to={`/pets/${petDetails.id}`}>Show</Link>
+              <Link to={`/pets/${petDetails.id}`}> Show</Link>
             </li>
           )
         })}

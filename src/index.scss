@@ -9,4 +9,29 @@ html {
 body {
   margin: 0;
   min-height: 100%;
+  background-color: #fefae0;
+}
+h1 {
+  text-align: center;
+}
+button {
+  font-size: 30px;
+  border-radius: 100px;
+  background-color: #dda15e;
+}
+button.delete {
+  margin-left: 200px;
+}
+input {
+  background-color: #bc6c25;
+}
+form {
+  text-align: center;
+}
+ul {
+  list-style: none;
+}
+li {
+  margin: 30px;
+  text-align: center;
 }
