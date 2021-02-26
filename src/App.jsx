@@ -4,7 +4,11 @@ import axios from 'axios'
 import { PetDetails } from './pages/PetDetails'
 
 export function PetPage() {
-  const [pickedPet, setPickedPet] = useState({})
+  const [pickedPet, setPickedPet] = useState({
+    id: undefined,
+    name: '',
+    isDead: false,
+  })
 
   const [feeding, setFeeding] = useState({})
 
@@ -14,17 +18,47 @@ export function PetPage() {
 
   const params = useParams()
 
-  useEffect(async () => {
-    const resp = await axios.get(
-      `https://amandaf-tamagotchi.herokuapp.com/api/pets/${params.id}`
-    )
-    setPickedPet(resp.data)
-  }, [params.id])
-
   const history = useHistory()
 
+  // Finding pet by ID
+  useEffect(
+    async function () {
+      const resp = await axios.get(
+        `https://amandaf-tamagotchi.herokuapp.com/api/pets/${params.id}`
+      )
+
+      setPickedPet(resp.data)
+    },
+    [params.id]
+  )
+
+  // Play with Pet
+  async function playWithPet() {
+    const resp = await axios.post(
+      `https://amandaf-tamagotchi.herokuapp.com/api/pets/${params.id}/playtimes`
+    )
+    setPlaytime(resp.data)
+  }
+
+  // Feed Pet
+  async function feedPet() {
+    const resp = await axios.post(
+      `https://amandaf-tamagotchi.herokuapp.com/api/pets/${params.id}/feedings`
+    )
+    setFeeding(resp.data)
+  }
+
+  // Scold Pet
+  async function scoldPet() {
+    const resp = await axios.post(
+      `https://amandaf-tamagotchi.herokuapp.com/api/pets/${params.id}/scolding`
+    )
+    setScolding(resp.data)
+  }
+
+  // Delete Pet
   async function deletePetItem() {
-    const response = await axios.delete(
+    const resp = await axios.delete(
       `https://amandaf-tamagotchi.herokuapp.com/api/pets/${params.id}}`
     )
     history.push('/')
@@ -32,9 +66,18 @@ export function PetPage() {
 
   return (
     <>
-      <button>Playtime</button>
-      <button>Feeding</button>
-      <button>Scolding</button>
+      <p className={pickedPet.isDead ? 'idDead' : ''}>{pickedPet.name}</p>
+      <p> Happiness: {pickedPet.happinessLevel}</p>
+      <p>Hunger: {pickedPet.hungerLevel}</p>
+      <p>Birthday: {pickedPet.birthday}</p>
+      <p>Last Interacted: {pickedPet.lastInteractedWithDate}</p>
+      {/* <p>Playtimes: {playtime}</p>
+      <p>Feeding: {feeding}</p>
+      <p>Scolding: {scolding}</p> */}
+
+      <button onClick={playWithPet}>Playtime: </button>
+      <button onClick={feedPet}>Feeding</button>
+      <button onClick={scoldPet}> Scolding</button>
       <button onClick={deletePetItem}>Delete</button>
     </>
   )
@@ -65,14 +108,13 @@ export function App() {
       <header>
         <h1>Welcome to my SPA</h1>
         <nav>
-          <PetDetails />
           <ul>
             <li>
               <Link to="/">Go Home</Link>
             </li>
-            <li>
-              <Link to={`/pets/id`}>Show</Link>
-            </li>
+            {/* <li>
+              <Link to={`/pets/${id}`}>Show</Link>
+            </li> */}
             <li>
               <Link to="/2">Page 2</Link>
             </li>
@@ -82,8 +124,9 @@ export function App() {
       <Switch>
         <Route exact path="/">
           Home
+          <PetDetails />
         </Route>
-        <Route exact path="/pets/id">
+        <Route exact path="/pets/:id">
           <PetPage />
           Page 1
         </Route>

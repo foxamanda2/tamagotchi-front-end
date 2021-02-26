@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 export function PetDetails() {
   const [pets, setPets] = useState({})
@@ -41,6 +42,7 @@ export function PetDetails() {
               {' '}
               {petDetails.name} Hunger:{petDetails.hungerLevel} Happiness:
               {petDetails.happinessLevel}
+              <Link to={`/pets/${petDetails.id}`}>Show</Link>
             </li>
           )
         })}
