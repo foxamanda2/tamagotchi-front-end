@@ -9,12 +9,13 @@ export function PetPage() {
     isDead: false,
   })
 
-  // const [petImage, setPetImage] = useState({
-  //   image: '',
-  //   link: '',
-  //   dataType: 'jpeg',
-  //   type: 'GET',
-  // })
+  const { id } = useParams()
+
+  const [randomFox, setRandomFox] = useState({
+    // This will set it to the correct image until the effect is ran
+    // image: `https:\/\/randomfox.ca\/images\/7.jpg`,
+    image: '',
+  })
 
   const [feeding, setFeeding] = useState({})
 
@@ -22,39 +23,46 @@ export function PetPage() {
 
   const [scolding, setScolding] = useState({})
 
-  const { id } = useParams()
+  // const { id } = useParams()
 
   const history = useHistory()
 
   const apiURL = `https://amandaf-tamagotchi.herokuapp.com/api/pets/${id}`
 
-  // const petAPI = `https://randomfox.ca/images/${id}.jpg`
+  const petAPI = `https://randomfox.ca/floof/?ref=apilist.fun`
 
   // Finding pet by ID
+
   useEffect(
     async function () {
       const resp = await axios.get(apiURL)
-
       setPickedPet(resp.data)
     },
+
     [id]
   )
 
-  // Get pet pictures
-  // useEffect(
-  //   async function () {
-  //     const resp = await axios.get(petAPI)
+  // api with axios
+  useEffect(async function () {
+    const resp = await axios.get(petAPI)
+    setRandomFox(resp.data)
+  }, [])
 
-  //     setPetImage(resp.data)
-  //   },
-  //   [id]
-  // )
+  // // API pictures
+  // useEffect(async function () {
+  //   const resp = await fetch(petAPI)
+
+  //   const json = await resp.json()
+
+  //   setRandomFox(json)
+  // }, [])
 
   // Play with Pet
   async function playWithPet() {
     const resp = await axios.post(
       `https://amandaf-tamagotchi.herokuapp.com/api/pets/${id}/playtimes`
     )
+
     setPlaytime(resp.data)
   }
 
@@ -63,6 +71,7 @@ export function PetPage() {
     const resp = await axios.post(
       `https://amandaf-tamagotchi.herokuapp.com/api/pets/${id}/feedings`
     )
+
     setFeeding(resp.data)
   }
 
@@ -71,12 +80,14 @@ export function PetPage() {
     const resp = await axios.post(
       `https://amandaf-tamagotchi.herokuapp.com/api/pets/${id}/scolding`
     )
+
     setScolding(resp.data)
   }
 
   // Delete Pet
   async function deletePetItem() {
     const resp = await axios.delete(apiURL)
+
     history.push('/')
   }
 
@@ -84,7 +95,9 @@ export function PetPage() {
     <>
       {/* <p className={pickedPet.isDead ? 'isDead' : ''}>{pickedPet.name}</p> */}
       <p className="name">{pickedPet.name}</p>
-      {/* <img src={petImage.image}></img> */}
+      <div>
+        <img src={randomFox.image} />
+      </div>
       <p> Happiness: {pickedPet.happinessLevel}</p>
       <p>Hunger: {pickedPet.hungerLevel}</p>
       <p>Birthday: {pickedPet.birthday}</p>

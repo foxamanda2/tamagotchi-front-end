@@ -15,6 +15,10 @@ body {
 }
 h1 {
   text-align: center;
+  background-image: url('Fox.jpg');
+  background-position: center;
+  color: #bc6c25;
+  padding: 100px;
 }
 button {
   font-size: 30px;
@@ -46,3 +50,14 @@ p {
   font-size: 30px;
   font-family: 'Reggae One', cursive;
 }
+img {
+  width: 200px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+// .homeFox {
+//   width: 500px;
+//   object-fit: cover;
+//   border: 15px solid black;
+// }
