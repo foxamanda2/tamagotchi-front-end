@@ -9,8 +9,6 @@ export function PetPage() {
     isDead: false,
   })
 
-  const { id } = useParams()
-
   const [randomFox, setRandomFox] = useState({
     // This will set it to the correct image until the effect is ran
     // image: `https:\/\/randomfox.ca\/images\/7.jpg`,
@@ -18,12 +16,10 @@ export function PetPage() {
   })
 
   const [feeding, setFeeding] = useState({})
-
   const [playtime, setPlaytime] = useState({})
-
   const [scolding, setScolding] = useState({})
 
-  // const { id } = useParams()
+  const { id } = useParams()
 
   const history = useHistory()
 
@@ -33,18 +29,18 @@ export function PetPage() {
 
   // Finding pet by ID
 
-  useEffect(
-    async function () {
-      const resp = await axios.get(apiURL)
-      setPickedPet(resp.data)
-    },
+  const loadPet = async function () {
+    const resp = await axios.get(apiURL)
 
-    [id]
-  )
+    setPickedPet(resp.data)
+  }
+
+  useEffect(loadPet, [id])
 
   // api with axios
   useEffect(async function () {
     const resp = await axios.get(petAPI)
+
     setRandomFox(resp.data)
   }, [])
 
@@ -63,6 +59,7 @@ export function PetPage() {
       `https://amandaf-tamagotchi.herokuapp.com/api/pets/${id}/playtimes`
     )
 
+    loadPet()
     setPlaytime(resp.data)
   }
 
@@ -72,15 +69,17 @@ export function PetPage() {
       `https://amandaf-tamagotchi.herokuapp.com/api/pets/${id}/feedings`
     )
 
+    loadPet()
     setFeeding(resp.data)
   }
 
   // Scold Pet
   async function scoldPet() {
     const resp = await axios.post(
-      `https://amandaf-tamagotchi.herokuapp.com/api/pets/${id}/scolding`
+      `https://amandaf-tamagotchi.herokuapp.com/api/pets/${id}/scoldings`
     )
 
+    loadPet()
     setScolding(resp.data)
   }
 
