@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Reggae+One&display=swap');
+
 :root {
   font: 16px / 1 sans-serif;
 }
@@ -18,12 +20,14 @@ button {
   font-size: 30px;
   border-radius: 100px;
   background-color: #dda15e;
+  margin-top: 40px;
 }
 button.delete {
   margin-left: 200px;
 }
 input {
   background-color: #bc6c25;
+  font-size: 15px;
 }
 form {
   text-align: center;
@@ -34,4 +38,11 @@ ul {
 li {
   margin: 30px;
   text-align: center;
+}
+p {
+  text-align: center;
+}
+.name {
+  font-size: 30px;
+  font-family: 'Reggae One', cursive;
 }

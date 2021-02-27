@@ -47,7 +47,7 @@ export function PetDetails() {
         <form onSubmit={handleCreatePetItem}>
           <input
             type="text"
-            placeholder="What is your Pets Name?"
+            placeholder="Name your new pet!"
             value={newPet}
             onChange={function (event) {
               setNewPet(event.target.value)
