@@ -9,26 +9,30 @@ export function PetPage() {
     isDead: false,
   })
 
-  const [randomFox, setRandomFox] = useState({
-    // This will set it to the correct image until the effect is ran
-    // image: `https:\/\/randomfox.ca\/images\/7.jpg`,
-    image: '',
+  const { id } = useParams()
+
+  const [randomFox] = useState({
+    // Need to create a statement if it goes over the amount of images
+    image: `https://randomfox.ca/images/${id}.jpg`,
   })
 
   const [feeding, setFeeding] = useState({})
   const [playtime, setPlaytime] = useState({})
   const [scolding, setScolding] = useState({})
 
-  const { id } = useParams()
-
   const history = useHistory()
 
   const apiURL = `https://amandaf-tamagotchi.herokuapp.com/api/pets/${id}`
 
-  const petAPI = `https://randomfox.ca/floof/?ref=apilist.fun`
+  // const petAPI = `https://randomfox.ca/floof/?ref=apilist.fun`
+  // api with axios
+  // useEffect(async function () {
+  //   const resp = await axios.get(petAPI)
+
+  //   setRandomFox(resp.data)
+  // }, [])
 
   // Finding pet by ID
-
   const loadPet = async function () {
     const resp = await axios.get(apiURL)
 
@@ -36,22 +40,6 @@ export function PetPage() {
   }
 
   useEffect(loadPet, [id])
-
-  // api with axios
-  useEffect(async function () {
-    const resp = await axios.get(petAPI)
-
-    setRandomFox(resp.data)
-  }, [])
-
-  // // API pictures
-  // useEffect(async function () {
-  //   const resp = await fetch(petAPI)
-
-  //   const json = await resp.json()
-
-  //   setRandomFox(json)
-  // }, [])
 
   // Play with Pet
   async function playWithPet() {
@@ -103,13 +91,12 @@ export function PetPage() {
       <p>Last Interacted: {pickedPet.lastInteractedWithDate}</p>
 
       <button className="play" onClick={playWithPet}>
-        Playtime{' '}
+        Playtime
       </button>
       <button className="feed" onClick={feedPet}>
         Feeding
       </button>
       <button className="scold" onClick={scoldPet}>
-        {' '}
         Scolding
       </button>
       <button className="delete" onClick={deletePetItem}>
