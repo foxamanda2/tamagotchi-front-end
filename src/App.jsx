@@ -7,14 +7,7 @@ export function App() {
   return (
     <>
       <header>
-        <h1>The Pet Palace 900</h1>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Go Home</Link>
-            </li>
-          </ul>
-        </nav>
+        <h1>The Fox Place</h1>
       </header>
       <Switch>
         <Route exact path="/">
@@ -22,10 +15,14 @@ export function App() {
         </Route>
         <Route exact path="/pets/:id">
           <PetPage />
-          Page 1
         </Route>
         <Route path="*">Not Found</Route>
       </Switch>
+      <footer>
+        <nav>
+          <Link to="/">Go Home</Link>
+        </nav>
+      </footer>
     </>
   )
 }

@@ -18,31 +18,49 @@ h1 {
   background-image: url('Fox.jpg');
   background-position: center;
   background-repeat: no-repeat;
-  color: #bc6c25;
+  color: #fefae0;
   padding: 100px;
+}
+nav {
+  text-align: center;
+  font-size: 20px;
+  margin: 30px 0px 30px 0px;
 }
 button {
   font-size: 30px;
   border-radius: 100px;
   background-color: #dda15e;
-  margin-top: 40px;
 }
-button.delete {
-  margin-left: 200px;
+.delete {
+  margin: 0px 0px 0px 200px;
+}
+.playtime {
+  margin: 0px 0px 0px 350px;
 }
 input {
-  background-color: #bc6c25;
-  font-size: 15px;
+  background-color: #dda15e;
+  font-size: 20px;
+  margin-bottom: 20px;
 }
 form {
+  text-align: center;
+}
+.homeHeader {
+  font-size: 25px;
   text-align: center;
 }
 ul {
   list-style: none;
 }
 li {
-  margin: 30px;
-  text-align: center;
+  margin: 30px auto;
+  padding: 5px;
+  background-color: #dda15e;
+  width: fit-content;
+  border: solid rgb(206, 134, 1);
+}
+.show {
+  margin-left: 15px;
 }
 p {
   text-align: center;
@@ -57,8 +75,3 @@ img {
   margin-left: auto;
   margin-right: auto;
 }
-// .homeFox {
-//   width: 500px;
-//   object-fit: cover;
-//   border: 15px solid black;
-// }

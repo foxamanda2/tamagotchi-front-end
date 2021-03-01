@@ -24,14 +24,6 @@ export function PetPage() {
 
   const apiURL = `https://amandaf-tamagotchi.herokuapp.com/api/pets/${id}`
 
-  // const petAPI = `https://randomfox.ca/floof/?ref=apilist.fun`
-  // api with axios
-  // useEffect(async function () {
-  //   const resp = await axios.get(petAPI)
-
-  //   setRandomFox(resp.data)
-  // }, [])
-
   // Finding pet by ID
   const loadPet = async function () {
     const resp = await axios.get(apiURL)
@@ -80,7 +72,6 @@ export function PetPage() {
 
   return (
     <>
-      {/* <p className={pickedPet.isDead ? 'isDead' : ''}>{pickedPet.name}</p> */}
       <p className="name">{pickedPet.name}</p>
       <div>
         <img src={randomFox.image} />
@@ -90,18 +81,20 @@ export function PetPage() {
       <p>Birthday: {pickedPet.birthday}</p>
       <p>Last Interacted: {pickedPet.lastInteractedWithDate}</p>
 
-      <button className="play" onClick={playWithPet}>
-        Playtime
-      </button>
-      <button className="feed" onClick={feedPet}>
-        Feeding
-      </button>
-      <button className="scold" onClick={scoldPet}>
-        Scolding
-      </button>
-      <button className="delete" onClick={deletePetItem}>
-        Delete
-      </button>
+      <div>
+        <button className="playtime" onClick={playWithPet}>
+          Playtime
+        </button>
+        <button className="feeding" onClick={feedPet}>
+          Feeding
+        </button>
+        <button className="scolding" onClick={scoldPet}>
+          Scolding
+        </button>
+        <button className="delete" onClick={deletePetItem}>
+          Delete
+        </button>
+      </div>
     </>
   )
 }
